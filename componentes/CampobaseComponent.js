@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './HomeComponent';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Contacto from './ContactoComponent';
+import QuienesSomos from './QuienesSomosComponent';
 
 
 const Stack = createStackNavigator();
@@ -51,6 +53,7 @@ function HomeNavegador() {
         headerTintColor: '#fff',
         headerStyle: { backgroundColor: '#015afc' },
         headerTitleStyle: { color: '#fff' },
+        headerTitleAlign: 'center'
       }}
     >
       <Stack.Screen
@@ -73,7 +76,9 @@ function DrawerNavegador() {
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={HomeNavegador} />
+      <Drawer.Screen name="Quiénes Somos" component={QuienesSomos} />
       <Drawer.Screen name="Calendario" component={CalendarioNavegador} />
+      <Drawer.Screen name="Contacto" component={Contacto} />
     </Drawer.Navigator>
   );
 }
