@@ -11,7 +11,6 @@ function RenderItem(props) {
     const styles = StyleSheet.create({
         chocolateTitle: {
             color: 'chocolate',
-            // ...StyleSheet.absoluteFill,
             fontSize: 35
         }
 

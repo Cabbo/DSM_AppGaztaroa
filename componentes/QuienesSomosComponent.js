@@ -26,10 +26,6 @@ function Historia(props) {
     }
 }
 
-function RenderQuienesSomosItem(props) {
-
-
-}
 
 class QuienesSomos extends Component {
     constructor(props) {
@@ -41,7 +37,6 @@ class QuienesSomos extends Component {
     }
 
     render() {
-        //const { excursionId } = this.props.route.params;
 
         const renderQuienesSomosItem = ({ item, index }) => {
             return (
