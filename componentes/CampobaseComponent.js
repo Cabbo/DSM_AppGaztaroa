@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from './HomeComponent';
 import Contacto from './ContactoComponent';
 import QuienesSomos from './QuienesSomosComponent';
-
+import { colorGaztaroaClaro, colorGaztaroaOscuro } from '../comun/comun';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,7 +24,7 @@ function CalendarioNavegador({ navigation }) {
       headerMode="screen"
       screenOptions={{
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaClaro },
         headerTitleStyle: { color: '#fff' },
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
       }}
@@ -54,7 +54,7 @@ function HomeNavegador({ navigation }) {
       headerMode="screen"
       screenOptions={{
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaClaro },
         headerTitleStyle: { color: '#fff' },
         headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
@@ -78,7 +78,7 @@ function ContactoNavegador({ navigation }) {
       headerMode="screen"
       screenOptions={{
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaClaro },
         headerTitleStyle: { color: '#fff' },
         headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
@@ -102,7 +102,7 @@ function QuienesSomosNavegador({ navigation }) {
       headerMode="screen"
       screenOptions={{
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaClaro },
         headerTitleStyle: { color: '#fff' },
         headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
@@ -123,7 +123,7 @@ function DrawerNavegador() {
   return (
     <Drawer.Navigator
       drawerStyle={{
-        backgroundColor: '#c2d3da',
+        backgroundColor: colorGaztaroaClaro,
       }}
       initialRouteName="Home"
       drawerContent={props => <CustomDrawerContent {...props} />}
@@ -206,7 +206,8 @@ class Campobase extends Component {
 
     return (
       <NavigationContainer>
-        <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
+        <View style={{ flex: 1}}>
+          {/* <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}> */}
           <DrawerNavegador />
         </View>
       </NavigationContainer>
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerHeader: {
-    backgroundColor: '#015afc',
+    backgroundColor: colorGaztaroaClaro,
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',
