@@ -15,6 +15,7 @@ export const ConfigureStore = () => {
             actividades
         }),
         applyMiddleware(thunk, logger)
+        //applyMiddleware(logger)
     );
 
     return store;
