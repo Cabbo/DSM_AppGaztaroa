@@ -6,6 +6,8 @@ import { comentarios } from './comentarios';
 import { cabeceras } from './cabeceras';
 import { actividades } from './actividades';
 import { favoritos } from './favoritos';
+//import { comentario } from './comentario';
+
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -14,7 +16,7 @@ export const ConfigureStore = () => {
             comentarios,
             cabeceras,
             actividades,
-            favoritos
+            favoritos,
         }),
         applyMiddleware(thunk, logger)
         //applyMiddleware(logger)
