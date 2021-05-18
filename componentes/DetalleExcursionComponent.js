@@ -14,14 +14,12 @@ const mapStateToProps = state => {
     comentarios: state.comentarios,
     favoritos: state.favoritos,
     comentario: state.comentario
-
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   postFavorito: (excursionId) => dispatch(postFavorito(excursionId)),
   postComentario: (comentario) => dispatch(postComentario(comentario))
-
 })
 
 

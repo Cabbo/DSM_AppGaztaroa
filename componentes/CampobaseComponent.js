@@ -6,6 +6,7 @@ import Home from './HomeComponent';
 import QuienesSomos from './QuienesSomosComponent';
 import Contacto from './ContactoComponent';
 import PruebaEsfuerzo from './PruebaEsfuerzoComponent';
+import VistaFavoritos from './VistaFavoritosComponent';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,7 +22,8 @@ const mapStateToProps = state => {
     excursiones: state.excursiones,
     comentarios: state.comentarios,
     cabeceras: state.cabeceras,
-    actividades: state.actividades
+    actividades: state.actividades,
+    favoritos: state.favoritos
   }
 }
 
@@ -30,6 +32,7 @@ const mapDispatchToProps = dispatch => ({
   fetchComentarios: () => dispatch(fetchComentarios()),
   fetchCabeceras: () => dispatch(fetchCabeceras()),
   fetchActividades: () => dispatch(fetchActividades()),
+  fetchFavoritos: () => dispatch(fetchFavoritos()),
 })
 
 const Stack = createStackNavigator();
@@ -150,7 +153,30 @@ function PruebaEsfuerzoNavegador({ navigation }) {
         name="PruebaEsfuerzo"
         component={PruebaEsfuerzo}
         options={{
-          title: 'PruebaEsfuerzo',
+          title: 'Prueba Esfuerzo',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function VistaFavoritosNavegador({ navigation }) {
+  return (
+    <Stack.Navigator
+      initialRouteName="VistaFavoritos"
+      headerMode="screen"
+      screenOptions={{
+        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
+        headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
+      }}
+    >
+      <Stack.Screen
+        name="VistaFavoritos"
+        component={VistaFavoritos}
+        options={{
+          title: 'Vista Favoritos',
         }}
       />
     </Stack.Navigator>
@@ -220,11 +246,23 @@ function DrawerNavegador() {
           )
         }}
       />
-      <Drawer.Screen name="PruebaEsfuerzo" component={PruebaEsfuerzoNavegador}
+      <Drawer.Screen name="Prueba Esfuerzo" component={PruebaEsfuerzoNavegador}
         options={{
           drawerIcon: ({ tintColor }) => (
             <Icon
               name='heartbeat'
+              type='font-awesome'
+              size={22}
+              color={tintColor}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen name="Vista Favoritos" component={VistaFavoritosNavegador}
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='thumbs-up'
               type='font-awesome'
               size={22}
               color={tintColor}
