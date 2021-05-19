@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListItem, Avatar } from 'react-native-elements';
-import { SafeAreaView, FlatList, View, Text, Alert } from 'react-native';
+import { SafeAreaView, FlatList, View, Text, Alert, Pressable } from 'react-native';
 import { baseUrl } from '../comun/comun';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
@@ -19,7 +19,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class VistaFavoritos extends Component {
-    showAlert = (name, id) =>
+    showAlert = (name, id) => {
+        console.log("LongPressed");
         Alert.alert(
             "Borrar excursión favorita?",
             "Confirme que desea borrar la escursión: " + name,
@@ -39,11 +40,12 @@ class VistaFavoritos extends Component {
                 onDismiss: () => console.log(name + ' Favorito no borrado'),
             }
         );
+    }
+
 
     render() {
-        // const { navigate } = this.props.navigation;
+        const { navigate } = this.props.navigation;
         const renderFavoritoItem = ({ item, index }) => {
-            //console.log(item+"eyyy")
             const rightButton = [
                 {
                     text: 'Borrar',
@@ -52,21 +54,26 @@ class VistaFavoritos extends Component {
                 }
             ];
 
-            console.log(this.props.favoritos);
-
             return (
+
+
                 <Swipeout right={rightButton} autoClose={true}>
-                    <ListItem
-                        key={index}
-                        //onPress={() => navigate('DetalleExcursion', { excursionId: item.id })}
-                        bottomDivider>
-                        <Avatar source={{ uri: baseUrl + item.imagen }} />
-                        <ListItem.Content>
-                            <ListItem.Title>{item.nombre}</ListItem.Title>
-                            <ListItem.Subtitle>{item.descripcion}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    </ListItem>
+                    <Pressable
+                        onLongPress={() => this.showAlert(item.nombre, item.id)}
+                        onPress={() => navigate('DetalleExcursion', { excursionId: item.id })}
+                    >
+                        <ListItem
+                            key={index}
+                            bottomDivider>
+                            <Avatar source={{ uri: baseUrl + item.imagen }} />
+                            <ListItem.Content>
+                                <ListItem.Title>{item.nombre}</ListItem.Title>
+                                <ListItem.Subtitle>{item.descripcion}</ListItem.Subtitle>
+                            </ListItem.Content>
+                        </ListItem>
+                    </Pressable >
                 </Swipeout>
+
             );
         };
 
@@ -77,7 +84,7 @@ class VistaFavoritos extends Component {
                     renderItem={renderFavoritoItem}
                     keyExtractor={item => item.id.toString()}
                 />
-            </SafeAreaView>
+            </SafeAreaView >
         );
     }
 }

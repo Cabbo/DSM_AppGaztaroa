@@ -11,15 +11,10 @@ export const favoritos = (state = [], action) => {
         case ActionTypes.BORRAR_FAVORITO:
             if (state.some(el => el === action.payload)) {
                 //borrar
-                // console.log("lo borro");
-                // const index = state.indexOf(action.payload);
-                // var favs = state.splice(index);
                 return state.filter((fav) => fav !== action.payload);
-                //return favs;
             }
             else
                 //no está
-                console.log("no lo borro");
                 return state;
 
         // case ActionTypes.FAVORITOS_LOADING:
