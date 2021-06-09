@@ -1,4 +1,6 @@
 import * as ActionTypes from './ActionTypes';
+import { baseUrl } from '../comun/comun';
+
 
 export const comentarios = (state = { errMess: null, comentarios: [] }, action) => {
   switch (action.type) {
@@ -13,9 +15,24 @@ export const comentarios = (state = { errMess: null, comentarios: [] }, action) 
       //console.log("state coommenting: "+state.comentarios);
       var comm = action.payload;
       comm.id = state.comentarios.length;
-      return { ...state, errMess: null, comentarios: state.comentarios.concat(comm) };
 
-      //return state.concat(action.payload);
+      var errMsg = null
+      //POST to Firebase
+      fetch(baseUrl + 'comentarios/' + comm.id + '.json', {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          comm
+        )
+      })
+        .then(response => response.json())
+        .catch(error => {errMsg= error.message});
+
+
+      return { ...state, errMess: errMsg, comentarios: state.comentarios.concat(comm) };
 
     default:
       return state;
