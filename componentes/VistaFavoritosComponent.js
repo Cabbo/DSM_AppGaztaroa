@@ -26,13 +26,13 @@ class VistaFavoritos extends Component {
             "Confirme que desea borrar la escursión: " + name,
             [
                 {
-                    text: "Ok",
-                    onPress: () => this.props.borrarFavorito(id),
-                },
-                {
                     text: "Cancelar",
                     onPress: () => console.log(name + ' Favorito no borrado'),
                     style: "cancel",
+                },
+                {
+                    text: "Ok",
+                    onPress: () => this.props.borrarFavorito(id),
                 },
             ],
             {

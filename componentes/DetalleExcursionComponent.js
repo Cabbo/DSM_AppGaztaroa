@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, StyleSheet, Button, Modal } from 'react-native';
+import { Text, View, ScrollView, FlatList, StyleSheet, Button, Modal, Share } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { baseUrl, colorGaztaroaOscuro, colorGaztaroaClaro } from '../comun/comun';
 import { connect } from 'react-redux';
@@ -28,6 +28,18 @@ function RenderExcursion(props) {
   const excursion = props.excursion;
 
   if (excursion != null) {
+
+    // const onShare = async (name) => {
+    //   try {
+    //     const result = await Share.share({
+    //       title: 'Compartir',
+    //       message: 'Participo en la próxima excursión a ' + name + '. Apúntate en la App Gaztaroa',
+    //     });
+    //   } catch (error) {
+    //     alert(error.message);
+    //   }
+    // };
+
     return (
       <Card>
         <Card.Image source={{ uri: excursion.imagen }}>
@@ -52,6 +64,23 @@ function RenderExcursion(props) {
             type='font-awesome'
             color={colorGaztaroaOscuro}
             onPress={() => { props.toggle() }}
+          />
+          <Icon
+            raised
+            reverse
+            name={'share-alt'}
+            type='font-awesome'
+            color={'#EF7F1A'}
+            onPress={() => {
+              try {
+                Share.share({
+                  title: 'Compartir',
+                  message: 'Participo en la próxima excursión a ' + excursion.nombre + ' | Apúntate en la App Gaztaroa! link.to.app',
+                });
+              } catch (error) {
+                alert(error.message);
+              }
+            }}
           />
         </View>
       </Card>
@@ -151,7 +180,7 @@ class DetalleExcursion extends Component {
               ratingColor='#f1e60f'
               ratingBackgroundColor='white'
               // tintColor='#fff1e60f'
-              onFinishRating={rating => this.setState({valoracion: rating})}
+              onFinishRating={rating => this.setState({ valoracion: rating })}
             />
             <Input
               placeholder=' Autor'
