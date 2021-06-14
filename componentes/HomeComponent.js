@@ -3,6 +3,7 @@ import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { IndicadorActividad } from './IndicadorActividadComponente';
+import { useNetInfo } from "@react-native-community/netinfo";
 
 
 const mapStateToProps = state => {
@@ -12,6 +13,20 @@ const mapStateToProps = state => {
         actividades: state.actividades
     }
 }
+
+const Connection = () => {
+    // returns a hook with the NetInfoState type.
+    const netInfo = useNetInfo();
+    if (netInfo.isConnected) {
+        return (
+            <Text>Device is connected to {netInfo.type} but has no Internet connection.</Text>
+        )
+    } else {
+        return (
+            <Text>Device is not connected. Check {netInfo.type} connection.</Text>
+        )
+    }
+};
 
 function RenderItem(props) {
 
@@ -27,6 +42,7 @@ function RenderItem(props) {
         return (
             <View>
                 <Text>{props.errMess}</Text>
+                <Connection />
             </View>
         );
     }
@@ -51,6 +67,7 @@ function RenderItem(props) {
             return (<View></View>);
         }
     }
+
 }
 
 
@@ -58,6 +75,7 @@ function RenderItem(props) {
 class Home extends Component {
 
     render() {
+
 
         return (
             <ScrollView>

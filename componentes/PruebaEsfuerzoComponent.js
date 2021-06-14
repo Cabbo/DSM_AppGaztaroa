@@ -3,6 +3,10 @@ import { Text, View, ScrollView, StyleSheet, Switch, Button, Platform, Modal } f
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colorGaztaroaOscuro } from '../comun/comun';
+import * as Calendar from "expo-calendar";
+import * as Permissions from "expo-permissions";
+import 'intl';
+import 'intl/locale-data/jsonp/es';
 
 class PruebaEsfuerzo extends Component {
 
@@ -13,6 +17,7 @@ class PruebaEsfuerzo extends Component {
             federado: false,
             fecha: new Date(),
             showdate: false,
+            showtime: false,
             showModal: false,
         }
     }
@@ -27,7 +32,7 @@ class PruebaEsfuerzo extends Component {
         if (selectedDate == undefined) {
             selectedDate = new Date();
         }
-        this.setState({ fecha: selectedDate, showdate: false })
+        this.setState({ fecha: selectedDate, showdate: false, showtime: false })
     };
 
     resetForm() {
@@ -41,6 +46,29 @@ class PruebaEsfuerzo extends Component {
 
     toggleModal() {
         this.setState({ showModal: !this.state.showModal });
+    }
+
+    async gestionarCalendario() {
+
+        const { status } = await Calendar.requestCalendarPermissionsAsync();
+
+        if (status === 'granted') {
+            try {
+                const calendars = await Calendar.getCalendarsAsync();
+                const enddate = new Date(this.state.fecha);
+                enddate.setHours(enddate.getHours() + 1, enddate.getMinutes(), 0, 0);
+                const eventDetails = {
+                    title: 'Reserva prueba de esfuerzo Gaztaroa',
+                    startDate: new Date(this.state.fecha),
+                    endDate: enddate,
+                }
+                await Calendar.createEventAsync(calendars[0].id, eventDetails);
+                alert("Evento creado en el calendario");
+            } catch (error) {
+                alert(error.message);
+                console.log(error.message);
+            }
+        }
     }
 
 
@@ -74,20 +102,35 @@ class PruebaEsfuerzo extends Component {
                 </View>
 
                 <View style={styles.formRow}>
-                    <Text style={styles.formLabel}>Día y hora</Text>
+                    <Text style={styles.formLabel}>Día y hora: {new Intl.DateTimeFormat('default', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(Date.parse(this.state.fecha))}</Text>
                     <Button
                         onPress={() => this.setState({ showdate: true })}
                         title="Elegir fecha"
                         color={colorGaztaroaOscuro}
                         accessibilityLabel="Gestionar reserva..."
                     />
-                    {this.state.showdate && <DateTimePicker
-                        style={{ flex: 2, marginRight: 20 }}
-                        value={this.state.fecha}
-                        mode='date'
-                        display="default"
-                        onChange={this.seleccionarFecha}
-                    />}
+                    {this.state.showdate
+                        && <DateTimePicker
+                            style={{ flex: 2, marginRight: 20 }}
+                            value={this.state.fecha}
+                            mode='date'
+                            display="default"
+                            onChange={this.seleccionarFecha}
+                        />}
+                    <Button
+                        onPress={() => this.setState({ showtime: true })}
+                        title="Hora"
+                        color={colorGaztaroaOscuro}
+                        accessibilityLabel="Gestionar reserva..."
+                    />
+                    {this.state.showtime
+                        && <DateTimePicker
+                            style={{ flex: 2, marginRight: 20 }}
+                            value={this.state.fecha}
+                            mode='time'
+                            display="default"
+                            onChange={this.seleccionarFecha}
+                        />}
 
                 </View>
 
@@ -107,9 +150,13 @@ class PruebaEsfuerzo extends Component {
                         <Text style={styles.modalTitle}>Detalle de la reserva</Text>
                         <Text style={styles.modalText}>Edad: {this.state.edad}</Text>
                         <Text style={styles.modalText}>Federado?: {this.state.federado ? 'Si' : 'No'}</Text>
-                        <Text style={styles.modalText}>Día y hora: {this.state.fecha.getDate()}/{this.state.fecha.getMonth()+1}/{this.state.fecha.getFullYear()}</Text>
-                        {/* <Text style={styles.modalText}>Día y hora: {new Intl.DateTimeFormat('default', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(Date.parse(this.state.fecha))}</Text> */}
+                        {/* <Text style={styles.modalText}>Día y hora: {this.state.fecha.getDate()}/{this.state.fecha.getMonth() + 1}/{this.state.fecha.getFullYear()}</Text> */}
+                        <Text style={styles.modalText}>Día y hora: {new Intl.DateTimeFormat('default', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(Date.parse(this.state.fecha))}</Text>
                         <Button
+                            onPress={() => { this.gestionarCalendario(); }}
+                            color={colorGaztaroaOscuro}
+                            title="Guardar en Calendario"
+                        /><Button
                             onPress={() => { this.toggleModal(); this.resetForm(); }}
                             color={colorGaztaroaOscuro}
                             title="Cerrar"
