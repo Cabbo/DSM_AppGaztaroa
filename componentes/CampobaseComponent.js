@@ -5,6 +5,7 @@ import DetalleExcursion from './DetalleExcursionComponent';
 import Home from './HomeComponent';
 import QuienesSomos from './QuienesSomosComponent';
 import Contacto from './ContactoComponent';
+import Login from './LoginComponent';
 import PruebaEsfuerzo from './PruebaEsfuerzoComponent';
 import VistaFavoritos from './VistaFavoritosComponent';
 import { View, StyleSheet, Image, Text } from 'react-native';
@@ -183,6 +184,29 @@ function VistaFavoritosNavegador({ navigation }) {
   );
 }
 
+function LoginNavegador({ navigation }) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      headerMode="screen"
+      screenOptions={{
+        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
+        headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />),
+      }}
+    >
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          title: 'Login',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
@@ -275,6 +299,18 @@ function DrawerNavegador() {
           drawerIcon: ({ tintColor }) => (
             <Icon
               name='address-card'
+              type='font-awesome'
+              size={22}
+              color={tintColor}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen name="Login" component={LoginNavegador}
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='sign-in'
               type='font-awesome'
               size={22}
               color={tintColor}

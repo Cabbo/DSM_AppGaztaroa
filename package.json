@@ -20,6 +20,7 @@
     "expo-calendar": "~8.6.0",
     "expo-permissions": "~10.0.0",
     "expo-status-bar": "~1.0.3",
+    "firebase": "^8.6.7",
     "intl": "^1.2.5",
     "moment": "^2.29.1",
     "react": "16.13.1",

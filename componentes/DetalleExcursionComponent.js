@@ -29,17 +29,6 @@ function RenderExcursion(props) {
 
   if (excursion != null) {
 
-    // const onShare = async (name) => {
-    //   try {
-    //     const result = await Share.share({
-    //       title: 'Compartir',
-    //       message: 'Participo en la próxima excursión a ' + name + '. Apúntate en la App Gaztaroa',
-    //     });
-    //   } catch (error) {
-    //     alert(error.message);
-    //   }
-    // };
-
     return (
       <Card>
         <Card.Image source={{ uri: excursion.imagen }}>

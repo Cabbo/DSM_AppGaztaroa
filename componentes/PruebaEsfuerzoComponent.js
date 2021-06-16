@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colorGaztaroaOscuro } from '../comun/comun';
 import * as Calendar from "expo-calendar";
-import * as Permissions from "expo-permissions";
 import 'intl';
 import 'intl/locale-data/jsonp/es';
 
